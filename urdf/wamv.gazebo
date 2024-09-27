@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot>
+  <!-- Link1 -->
+  <gazebo reference="wamv/base_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+</robot>

@@ -1,0 +1,11 @@
+<world name="default">
+    <!-- Configuración del mundo vacío -->
+    <include>
+        <uri>model://sun</uri>
+    </include>
+    <include>
+        <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Aquí puedes añadir otros modelos o elementos que desees en el mundo vacío -->
+</world>

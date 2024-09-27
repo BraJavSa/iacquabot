@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Lanzar Gazebo con el mundo de sandisland -->
+  <arg name="world_file" default="$(find usv_sim)/worlds/sandisland.world"/>
+  <arg name="namespace" default="wamv"/>
+  <arg name="x" default="0" />
+  <arg name="y" default="0" />
+  <arg name="z" default="10" />
+  <arg name="P" default="0" />
+  <arg name="R" default="0" />
+  <arg name="Y" default="0" />
+  
+
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_file)"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+  </include>
+  
+
+
+
+
+  <!-- Incluir el Xacro del robot -->
+  
+  
+  
+  <param name="robot_description" command="xacro $(find iacquabot_mil)/urdf/wamv.xacro"/>
+
+  <!-- Spawnear el robot en Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" 
+        args="-x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg R) -P $(arg P) -Y $(arg Y)
+              -param robot_description -urdf -model wamv"/>
+  
+  <node pkg="joy" type="joy_node" name="joy_node_1">
+
+  <param name="dev" value="/dev/input/js0"/>
+    <remap from="joy" to="joy0"/> <!-- Remap /joy to /joy1 -->
+  </node>
+  <!--node pkg="iacquabot_mil" type="usv_model.py" name="usv_model" output="screen"/-->
+  <node name="odometry_publisher" pkg="iacquabot_mil" type="odometry_publisher.py" output="screen"/>
+  <node name="odom_tf_broadcaster" pkg="iacquabot_mil" type="tf.py" output="screen"/>
+
+  <node pkg="iacquabot_mil" type="joy_control.py" name="joy_teleop" output="screen"/>
+  <node pkg="iacquabot_mil" type="prueba.py" name="drone_model_node" output="screen"/>
+  <!--node name="imu_publisher" pkg="iacquabot_mil" type="imu_publisher.py" output="screen"/-->
+  <node pkg="iacquabot_mil" type="ros2sim.py" name="usv_controller" output="screen"/>
+  
+
+
+</launch>
+
+
+

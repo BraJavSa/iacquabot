@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot name="wamv" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="wamv2" xmlns:xacro="http://ros.org/wiki/xacro">
 
 
     <xacro:include filename="$(find iacquabot_mil)/urdf/materials.xacro" />
     <xacro:include filename="$(find iacquabot_mil)/urdf/wamv.gazebo"/>
-    <xacro:arg name="namespace" default="wamv"/>   
+    <xacro:arg name="namespace" default="wamv2"/>   
 
     <xacro:arg name="sensor_namespace" default="sensors/"/>
     <xacro:arg name="camera_enabled" default="true"/>
@@ -21,15 +21,13 @@
   <link name="${namespace}/base_link">
     <visual>
       <geometry>
-       <mesh filename="package://iacquabot_mil/urdf/models/balsa.dae" scale="0.05 0.05 0.05"/> <!-- Ajusta la escala según sea necesario -->
+       <mesh filename="package://iacquabot_mil/urdf/models/balsa.dae" scale="0.1 0.1 0.1"/> <!-- Ajusta la escala según sea necesario -->
       </geometry>
       <origin xyz="0 0 -0.05" rpy="0 0 3.14159" />
+        <transparency>0.5</transparency> <!-- Añade transparencia del 50% -->
+
+
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://iacquabot_mil/urdf/models/balsa.dae" scale="0.05 0.05 0.05"/>
-      </geometry>
-    </collision>
     <inertial>
       <mass value="1.0"/>
       <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/> <!-- Atributos de inercia -->
@@ -38,13 +36,9 @@
       <gazebo reference="${namespace}/base_link">
         <gravity>0</gravity> <!-- Deshabilita el efecto de la gravedad -->
         <static>true</static> <!-- Hace que el objeto sea estático, sin dinámicas físicas -->
+          <transparency>0.5</transparency> <!-- Añade transparencia del 50% -->
+
     </gazebo>
 
-  <!-- Add sensors -->
-  <xacro:wamv_p3d name="p3d_wamv"/>
-  <xacro:if value="$(arg camera_enabled)">
-    <xacro:wamv_camera name="front_camera" y="0" x="0.3" P="${radians(1)}" />
-  <xacro:wamv_gps name="gps_wamv" x="-0.45"  z="0.08"/>
-  </xacro:if>
   
 </robot>

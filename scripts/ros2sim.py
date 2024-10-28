@@ -15,11 +15,11 @@ class ROS2Sim:
         self.set_model_state_srv = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
 
         # Suscripción al tópico de Pose
-        self.pose_sub = rospy.Subscriber('/usv/pose', Pose, self.pose_callback)
+        self.pose_sub = rospy.Subscriber('/usv2/pose', Pose, self.pose_callback)
 
         # Inicializa el mensaje ModelState
         self.model_state = ModelState()
-        self.model_state.model_name = 'wamv'  # Nombre del robot en Gazebo
+        self.model_state.model_name = 'wamv2'  # Nombre del robot en Gazebo
         self.model_state.reference_frame = 'world'  # Referencia para el movimiento
 
     def pose_callback(self, msg):
